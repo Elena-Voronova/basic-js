@@ -20,27 +20,34 @@ function repeater(str, options) {
   let additionSeparator = options.additionSeparator;
   let repeatTimes = options.repeatTimes;
   let additionRepeatTimes = options.additionRepeatTimes;
+  let addition = options.addition;
   if(typeof(str) !== 'string'){
-    str = str.toString();
+    str = String(str);
   }
-
-  if(separator == undefined){
+  if(typeof(options.addition) !== 'string'){
+    addition = String(options.addition);
+  }
+  if(options.separator == undefined){
     separator = '+';
-  } else if(additionSeparator == undefined){
-    additionSeparator = '|';
-  } else if(additionRepeatTimes == undefined && repeatTimes == undefined){
+  }
+  if(additionRepeatTimes == undefined && repeatTimes == undefined){
     return [str, options.addition].join('');
   }
 
   let arrAdd = [];
   for(i=0; i<additionRepeatTimes; i++){
-    arrAdd.push(options.addition);
+    arrAdd.push(addition);
   }
-  let addition = arrAdd.join(additionSeparator);
+  let addit;
+  if(options.additionSeparator){
+    addit = arrAdd.join(additionSeparator);
+  } else {
+    addit = arrAdd.join('|');
+  }
 
   let arrStr = [];
   for(i=0; i<repeatTimes; i++){
-    arrStr.push(str + addition);
+    arrStr.push(str + addit);
   }
 
   return arrStr.join(separator);
